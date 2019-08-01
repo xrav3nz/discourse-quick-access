@@ -1,0 +1,5 @@
+discourse_quick_access_icons:
+  default: 'bell'
+  type: 'list'
+  list_type: 'compact'
+  hidden: true
