@@ -6,10 +6,18 @@ const UserMenuAction = {
 };
 
 const QuickAccess = {
+  BOOKMARKS: "bookmarks",
   NOTIFICATIONS: "notifications"
 };
 
 const UserMenuLinks = {
+  bookmarksGlyph() {
+    return Object.assign({}, this._super(), {
+      action: UserMenuAction.QUICK_ACCESS,
+      actionParam: QuickAccess.BOOKMARKS
+    });
+  },
+
   isCurrentlySelected({ action, actionParam }) {
     return (
       action === UserMenuAction.QUICK_ACCESS &&
