@@ -1,6 +1,7 @@
 import { h } from "virtual-dom";
 import DiscourseURL from "discourse/lib/url";
 import QuickAccessPanel from "discourse/widgets/quick-access-panel";
+import RawHtml from "discourse/widgets/raw-html";
 import UserAction from "discourse/models/user-action";
 import { ajax } from "discourse/lib/ajax";
 import { createWidget, createWidgetFrom } from "discourse/widgets/widget";
@@ -11,7 +12,10 @@ createWidget("quick-access-item", {
   tagName: "li.read",
 
   html({ icon, href, content }) {
-    return h("a", { attributes: { href } }, [iconNode(icon), content]);
+    return h("a", { attributes: { href } }, [
+      iconNode(icon),
+      new RawHtml({ html: `<div>${content}</div>` })
+    ]);
   }
 });
 
