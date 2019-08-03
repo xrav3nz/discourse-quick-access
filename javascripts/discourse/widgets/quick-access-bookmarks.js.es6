@@ -5,6 +5,7 @@ import RawHtml from "discourse/widgets/raw-html";
 import UserAction from "discourse/models/user-action";
 import { ajax } from "discourse/lib/ajax";
 import { createWidget, createWidgetFrom } from "discourse/widgets/widget";
+import { emojiUnescape } from "discourse/lib/text";
 import { iconNode } from "discourse-common/lib/icon-library";
 import { postUrl } from "discourse/lib/utilities";
 
@@ -14,7 +15,11 @@ createWidget("quick-access-item", {
   html({ icon, href, content }) {
     return h("a", { attributes: { href } }, [
       iconNode(icon),
-      new RawHtml({ html: `<div>${content}</div>` })
+      new RawHtml({
+        html: `<div>${emojiUnescape(
+          Handlebars.Utils.escapeExpression(content)
+        )}</div>`
+      })
     ]);
   }
 });
