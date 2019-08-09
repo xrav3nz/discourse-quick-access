@@ -51,8 +51,7 @@ createWidgetFrom(QuickAccessPanel, "quick-access-bookmarks", {
         limit: this.estimateItemLimit()
       }
     }).then(({ user_actions }) => {
-      staleItems = user_actions;
-      return user_actions;
+      return (staleItems = user_actions.slice(0, this.estimateItemLimit()));
     });
   },
 
