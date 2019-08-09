@@ -69,10 +69,6 @@ createWidgetFrom(QuickAccessPanel, "quick-access-notifications", {
       .refresh();
   },
 
-  hasMore() {
-    return this.state.items.length >= this.estimateItemLimit();
-  },
-
   showAll() {
     DiscourseURL.routeTo(`${this.attrs.path}/notifications`);
   },

@@ -27,7 +27,7 @@ export default createWidget("quick-access-panel", {
   },
 
   hasUnread() {
-    return false;
+    return this.state.items.length >= this.estimateItemLimit();
   },
 
   showAll() {},
