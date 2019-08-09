@@ -11,8 +11,8 @@ import { headerHeight } from "discourse/components/site-header";
  * There are parts to showing a quick access panel:
  * 1. A user menu link that sends a `quickAccess` action, with a unique `type`,
  * upon being clicked.
- * 2. A `quick-access-type` widget, extending from `quick-access-panel` needs
- * to be available to rending the quick access panel.
+ * 2. A `quick-access-${type}` widget, extended from `quick-access-panel`, needs
+ * to be available to render the quick access panel.
  */
 export default createWidget("quick-access-panel", {
   // Reuse the existing CSS in core.
@@ -59,11 +59,11 @@ export default createWidget("quick-access-panel", {
   },
 
   estimateItemLimit() {
-    // estimate (poorly) the amount of notifications to return
+    // Estimate (poorly) the amount of notifications to return.
     let limit = Math.round(($(window).height() - headerHeight()) / 55);
 
-    // we REALLY don't want to be asking for negative counts of notifications
-    // less than 5 is also not that useful
+    // We REALLY don't want to be asking for negative counts of notifications
+    // less than 5 is also not that useful.
     if (limit < 5) {
       limit = 5;
     } else if (limit > 40) {
