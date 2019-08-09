@@ -7,6 +7,7 @@ const UserMenuAction = {
 
 const QuickAccess = {
   BOOKMARKS: "bookmarks",
+  MESSAGES: "messages",
   NOTIFICATIONS: "notifications"
 };
 
@@ -15,6 +16,13 @@ const UserMenuLinks = {
     return Object.assign({}, this._super(), {
       action: UserMenuAction.QUICK_ACCESS,
       actionParam: QuickAccess.BOOKMARKS
+    });
+  },
+
+  messagesGlyph() {
+    return Object.assign({}, this._super(), {
+      action: UserMenuAction.QUICK_ACCESS,
+      actionParam: QuickAccess.MESSAGES
     });
   },
 
