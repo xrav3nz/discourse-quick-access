@@ -11,36 +11,14 @@ createWidgetFrom(QuickAccessPanel, "quick-access-notifications", {
   },
 
   newItemsLoaded() {
-    if (!this.currentUser.get("enforcedSecondFactor")) {
+    if (!this.currentUser.enforcedSecondFactor) {
       this.currentUser.set("unread_notifications", 0);
     }
   },
 
   findStaleItems() {
-    const silent = this.currentUser.get("enforcedSecondFactor");
-    const limit = this.estimateItemLimit();
-
-    const stale = this.store.findStale(
-      "notification",
-      { recent: true, silent, limit },
-      { cacheKey: "recent-notifications" }
-    );
-
-    if (stale.hasResults) {
-      const results = stale.results;
-      let content = results.get("content");
-
-      // we have to truncate to limit, otherwise we will render too much
-      if (content && content.length > limit) {
-        content = content.splice(0, limit);
-        results.set("content", content);
-        results.set("totalRows", limit);
-      }
-
-      return content;
-    } else {
-      return [];
-    }
+    const staleItems = this.findStaleItemsInStore_();
+    return staleItems.hasResults ? staleItems.results : [];
   },
 
   itemHtml(notification) {
@@ -57,16 +35,7 @@ createWidgetFrom(QuickAccessPanel, "quick-access-notifications", {
   },
 
   findNewItems() {
-    const silent = this.currentUser.get("enforcedSecondFactor");
-    const limit = this.estimateItemLimit();
-
-    return this.store
-      .findStale(
-        "notification",
-        { recent: true, silent, limit },
-        { cacheKey: "recent-notifications" }
-      )
-      .refresh();
+    return this.findStaleItemsInStore_().refresh();
   },
 
   showAll() {
@@ -75,5 +44,17 @@ createWidgetFrom(QuickAccessPanel, "quick-access-notifications", {
 
   hasUnread() {
     return this.state.items.filterBy("read", false).length > 0;
+  },
+
+  findStaleItemsInStore_() {
+    return this.store.findStale(
+      "notification",
+      {
+        recent: true,
+        silent: this.currentUser.enforcedSecondFactor,
+        limit: this.estimateItemLimit()
+      },
+      { cacheKey: "recent-notifications" }
+    );
   }
 });
