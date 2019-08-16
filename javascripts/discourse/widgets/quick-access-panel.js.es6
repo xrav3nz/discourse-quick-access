@@ -27,13 +27,13 @@ export default createWidget("quick-access-panel", {
   },
 
   hasUnread() {
-    return this.state.items.length >= this.estimateItemLimit();
+    return false;
   },
 
   showAll() {},
 
   hasMore() {
-    return false;
+    return this.state.items.length >= this.estimateItemLimit();
   },
 
   findStaleItems() {
