@@ -1,0 +1,11 @@
+.menu-panel {
+  li,
+  li.heading {
+    a.widget-link {
+      &.selected {
+        background-color: $highlight-medium;
+        outline: none;
+      }
+    }
+  }
+}
