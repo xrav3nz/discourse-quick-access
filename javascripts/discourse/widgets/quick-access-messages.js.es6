@@ -6,12 +6,24 @@ const PRIVATE_MESSAGE_NOTIFICATION_TYPE = 6;
 
 let staleItems = [];
 
+// TODO: Reconsider if we should be reusing the `DefaultNotificationItem`.
+/**
+ * Transforms the raw topic list payload item, so that the
+ * `DefaultNotificationItem` can be reused.
+ */
 function toNotificationItem(message) {
+  const lastReadPostNumber = message.last_read_post_number || 0;
+  const nextUnreadPostNumber = Math.min(
+    lastReadPostNumber + 1,
+    message.highest_post_number
+  );
+
   return Ember.Object.create({
     id: null,
     notification_type: PRIVATE_MESSAGE_NOTIFICATION_TYPE,
     read: message.last_read_post_number >= message.highest_post_number,
     topic_id: message.id,
+    post_number: nextUnreadPostNumber,
     slug: message.slug,
     fancy_title: message.fancy_title,
     data: {
