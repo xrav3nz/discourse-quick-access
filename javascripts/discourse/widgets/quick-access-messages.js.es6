@@ -35,6 +35,7 @@ function toNotificationItem(message) {
 
 createWidgetFrom(QuickAccessPanel, "quick-access-messages", {
   buildKey: () => "quick-access-messages",
+  emptyStatePlaceholderItemKey: "choose_topic.none_found",
 
   hasMore() {
     // Always show the button to the messages page.

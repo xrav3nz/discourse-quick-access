@@ -26,6 +26,9 @@ createWidget("quick-access-item", {
 
 let staleItems = [];
 
+// The empty state help text for bookmarks page is localized on the server.
+let emptyStatePlaceholderItemText = "";
+
 createWidgetFrom(QuickAccessPanel, "quick-access-bookmarks", {
   buildKey: () => "quick-access-bookmarks",
 
@@ -38,6 +41,10 @@ createWidgetFrom(QuickAccessPanel, "quick-access-bookmarks", {
     DiscourseURL.routeTo(`${this.attrs.path}/activity/bookmarks`);
   },
 
+  emptyStatePlaceholderItem() {
+    return h("li.read", emptyStatePlaceholderItemText);
+  },
+
   findStaleItems() {
     return staleItems || [];
   },
@@ -48,9 +55,11 @@ createWidgetFrom(QuickAccessPanel, "quick-access-bookmarks", {
       data: {
         username: this.currentUser.username,
         filter: UserAction.TYPES.bookmarks,
-        limit: this.estimateItemLimit()
+        limit: this.estimateItemLimit(),
+        no_results_help_key: "user_activity.no_bookmarks"
       }
-    }).then(({ user_actions }) => {
+    }).then(({ user_actions, no_results_help }) => {
+      emptyStatePlaceholderItemText = no_results_help;
       return (staleItems = user_actions.slice(0, this.estimateItemLimit()));
     });
   },

@@ -17,6 +17,7 @@ import { headerHeight } from "discourse/components/site-header";
 export default createWidget("quick-access-panel", {
   // Reuse the existing CSS in core.
   tagName: "div.notifications",
+  emptyStatePlaceholderItemKey: "",
 
   buildKey: () => {
     throw Error('Cannot attach abstract widget "quick-acess-panel"');
@@ -47,6 +48,12 @@ export default createWidget("quick-access-panel", {
   newItemsLoaded() {},
 
   itemHtml(item) {}, // eslint-disable-line no-unused-vars
+
+  emptyStatePlaceholderItem() {
+    if (this.emptyStatePlaceholderItemKey) {
+      return h("li.read", I18n.t(this.emptyStatePlaceholderItemKey));
+    }
+  },
 
   defaultState() {
     return { items: [], loading: false, loaded: false };
@@ -114,30 +121,24 @@ export default createWidget("quick-access-panel", {
       return [h("div.spinner-container", h("div.spinner"))];
     }
 
-    const virtualDom = [];
+    const items = state.items.length
+      ? state.items.map(this.itemHtml.bind(this))
+      : [this.emptyStatePlaceholderItem()];
 
-    if (state.items.length) {
-      virtualDom.push(h("hr"));
-
-      const items = state.items.map(this.itemHtml.bind(this));
-
-      if (this.hasMore()) {
-        items.push(
-          h(
-            "li.read.last.heading.show-all",
-            this.attach("button", {
-              title: "notifications.more",
-              icon: "chevron-down",
-              action: "showAll",
-              className: "btn"
-            })
-          )
-        );
-      }
-
-      virtualDom.push(h("ul", items));
+    if (this.hasMore()) {
+      items.push(
+        h(
+          "li.read.last.heading.show-all",
+          this.attach("button", {
+            title: "notifications.more",
+            icon: "chevron-down",
+            action: "showAll",
+            className: "btn"
+          })
+        )
+      );
     }
 
-    return virtualDom;
+    return [h("hr"), h("ul", items)];
   }
 });
