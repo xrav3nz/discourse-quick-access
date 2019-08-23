@@ -1,10 +1,37 @@
-.menu-panel {
-  li,
-  li.heading {
-    a.widget-link {
-      &.selected {
-        background-color: $highlight-medium;
-        outline: none;
+div.menu-links-header {
+  .menu-links-row {
+    border-bottom: 1px solid $primary-low;
+
+    li {
+      a {
+        // This is to make sure active and inactive tab icons have the same
+        // size. `box-sizing` does not work and I have no idea why.
+        border: 1px solid transparent;
+        border-bottom: 0;
+      }
+
+      .selected {
+        border: 1px solid $primary-low;
+        border-bottom: 0;
+        position: relative;
+
+        &:after {
+          display: block;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          z-index: z("header") + 1; // Higher than .menu-panel
+          width: 100%;
+          height: 0;
+          content: "";
+          border-top: 1px solid $secondary;
+        }
+
+        &:active,
+        &:focus,
+        &:hover {
+          background-color: inherit;
+        }
       }
     }
   }

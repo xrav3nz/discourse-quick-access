@@ -139,6 +139,6 @@ export default createWidget("quick-access-panel", {
       );
     }
 
-    return [h("hr"), h("ul", items)];
+    return [h("ul", items)];
   }
 });
