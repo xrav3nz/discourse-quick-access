@@ -26,7 +26,7 @@ const UserMenuLinks = {
     });
   },
 
-  isCurrentlySelected({ action, actionParam }) {
+  isActive({ action, actionParam }) {
     return (
       action === UserMenuAction.QUICK_ACCESS &&
       actionParam === this.attrs.currentQuickAccess
@@ -34,16 +34,16 @@ const UserMenuLinks = {
   },
 
   glyphHtml(glyph) {
-    if (this.isCurrentlySelected(glyph)) {
-      // Selecting an already selected quick access menu will redirect the user
+    if (this.isActive(glyph)) {
+      // Clicking on an active quick access tab icon should redirect the user
       // to the full page.
       delete glyph.action;
       delete glyph.actionParam;
 
       if (glyph.className) {
-        glyph.className += " selected";
+        glyph.className += " active";
       } else {
-        glyph.className = "selected";
+        glyph.className = "active";
       }
     }
 
