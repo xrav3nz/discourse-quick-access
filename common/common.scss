@@ -33,6 +33,23 @@ div.menu-links-header {
           background-color: inherit;
         }
       }
+
+      // `overflow: hidden` on `.user-activity-link` also hides the `::after`
+      // pseudo element. This sets `overflow: hidden` on the child username
+      // label instead.
+      .user-activity-link {
+        overflow: visible;
+        display: flex;
+        align-items: center;
+
+        span.d-label {
+          display: block;
+          max-width: 130px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
     }
   }
 }
