@@ -35,38 +35,41 @@ const UserMenuLinks = {
   },
 
   glyphHtml(glyph) {
-    glyph = this._enableQuickAccessPanelFor(glyph);
-
-    if (this.isActive(glyph)) {
-      // Clicking on an active quick access tab icon should redirect the user
-      // to the full page.
-      delete glyph.action;
-      delete glyph.actionParam;
-
-      if (glyph.className) {
-        glyph.className += " active";
-      } else {
-        glyph.className = "active";
-      }
-    }
-
-    glyph.hideLabel = true;
-
-    return this.attach("link", glyph);
+    glyph = this._overrideBeforeRendering(glyph);
+    glyph = this._markAsActive(glyph);
+    return this._super(glyph);
   },
 
-  /**
-   * Super charge other user menu glyphs (that cannot be easily overriden) with
-   * a quick access panel.
-   */
-  _enableQuickAccessPanelFor(glyph) {
-    if (glyph.className === "assigned") {
-      return Object.assign({}, glyph, {
+  _markAsActive(definition) {
+    if (this.isActive(definition)) {
+      // Clicking on an active quick access tab icon should redirect the user
+      // to the full page.
+      delete definition.action;
+      delete definition.actionParam;
+
+      if (definition.className) {
+        definition.className += " active";
+      } else {
+        definition.className = "active";
+      }
+    }
+    return definition;
+  },
+
+  _overrideBeforeRendering(definition) {
+    if (definition.className === "assigned") {
+      return Object.assign({}, definition, {
         action: UserMenuAction.QUICK_ACCESS,
         actionParam: QuickAccess.ASSIGNMENTS
       });
+    } else if (definition.className === "user-preferences-link") {
+      return Object.assign({}, definition, {
+        attributes: {
+          style: "display: none;"
+        }
+      });
     }
-    return glyph;
+    return definition;
   }
 };
 
