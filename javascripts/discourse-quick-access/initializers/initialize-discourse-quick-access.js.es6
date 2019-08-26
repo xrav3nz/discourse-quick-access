@@ -6,6 +6,7 @@ const UserMenuAction = {
 };
 
 const QuickAccess = {
+  ASSIGNMENTS: "assignments",
   BOOKMARKS: "bookmarks",
   MESSAGES: "messages",
   NOTIFICATIONS: "notifications"
@@ -34,6 +35,8 @@ const UserMenuLinks = {
   },
 
   glyphHtml(glyph) {
+    glyph = this._enableQuickAccessPanelFor(glyph);
+
     if (this.isActive(glyph)) {
       // Clicking on an active quick access tab icon should redirect the user
       // to the full page.
@@ -50,6 +53,20 @@ const UserMenuLinks = {
     glyph.hideLabel = true;
 
     return this.attach("link", glyph);
+  },
+
+  /**
+   * Super charge other user menu glyphs (that cannot be easily overriden) with
+   * a quick access panel.
+   */
+  _enableQuickAccessPanelFor(glyph) {
+    if (glyph.className === "assigned") {
+      return Object.assign({}, glyph, {
+        action: UserMenuAction.QUICK_ACCESS,
+        actionParam: QuickAccess.ASSIGNMENTS
+      });
+    }
+    return glyph;
   }
 };
 
