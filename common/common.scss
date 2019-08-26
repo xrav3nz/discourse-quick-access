@@ -3,6 +3,12 @@ div.menu-links-header {
     border-bottom: 1px solid $primary-low;
 
     li {
+      &.glyphs a {
+        // Expand the click area a bit. The original value is `0.5em`.
+        padding-left: 0.6em;
+        padding-right: 0.6em;
+      }
+
       a {
         // This is to make sure active and inactive tab icons have the same
         // size. `box-sizing` does not work and I have no idea why.
