@@ -21,6 +21,13 @@ createWidget("quick-access-item", {
         )}</div>`
       })
     ]);
+  },
+
+  click(e) {
+    if (this.attrs.action) {
+      e.preventDefault();
+      return this.sendWidgetAction(this.attrs.action, this.attrs.actionParam);
+    }
   }
 });
 

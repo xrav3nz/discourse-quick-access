@@ -1,5 +1,5 @@
 discourse_quick_access_icons:
-  default: 'bell'
+  default: 'bell|stream'
   type: 'list'
   list_type: 'compact'
   hidden: true

@@ -9,10 +9,18 @@ const QuickAccess = {
   ASSIGNMENTS: "assignments",
   BOOKMARKS: "bookmarks",
   MESSAGES: "messages",
-  NOTIFICATIONS: "notifications"
+  NOTIFICATIONS: "notifications",
+  PROFILE: "profile"
 };
 
 const UserMenuLinks = {
+  profileLink() {
+    return Object.assign({}, this._super(), {
+      action: UserMenuAction.QUICK_ACCESS,
+      actionParam: QuickAccess.PROFILE
+    });
+  },
+
   bookmarksGlyph() {
     return Object.assign({}, this._super(), {
       action: UserMenuAction.QUICK_ACCESS,
@@ -32,6 +40,11 @@ const UserMenuLinks = {
       action === UserMenuAction.QUICK_ACCESS &&
       actionParam === this.attrs.currentQuickAccess
     );
+  },
+
+  linkHtml(link) {
+    link = this._markAsActive(link);
+    return this._super(link);
   },
 
   glyphHtml(glyph) {
@@ -98,31 +111,8 @@ const UserMenu = {
       this.quickAccessPanel(path)
     ];
 
-    if (this.settings.showLogoutButton || this.state.hasUnread) {
-      result.push(h("hr.bottom-area"));
-    }
-
-    if (this.settings.showLogoutButton) {
-      result.push(
-        h("div.logout-link", [
-          h(
-            "ul.menu-links",
-            h(
-              "li",
-              this.attach("link", {
-                action: "logout",
-                className: "logout",
-                icon: "sign-out-alt",
-                href: "",
-                label: "user.log_out"
-              })
-            )
-          )
-        ])
-      );
-    }
-
     if (this.state.hasUnread) {
+      result.push(h("hr.bottom-area"));
       result.push(this.attach("user-menu-dismiss-link"));
     }
 
@@ -130,9 +120,11 @@ const UserMenu = {
   },
 
   quickAccessPanel(path) {
+    const { showLogoutButton } = this.settings;
     // This deliberately does NOT fallback to a default quick access panel.
     return this.attach(`quick-access-${this.state.currentQuickAccess}`, {
-      path
+      path,
+      showLogoutButton
     });
   },
 
