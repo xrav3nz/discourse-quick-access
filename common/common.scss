@@ -55,6 +55,14 @@ div.menu-links-header {
           white-space: nowrap;
           text-overflow: ellipsis;
         }
+
+        .d-icon-user {
+          // The original value is 0.2em. There is a space character between
+          // the icon and the label, and it adds to the space inbetween when
+          // the elements were inline. So the new `margin-right` should be
+          // `widthOfTheSpace` + 0.2em, which is roughly 0.475em.
+          margin-right: 0.475em;
+        }
       }
     }
   }
