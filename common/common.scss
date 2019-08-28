@@ -3,7 +3,7 @@ div.menu-links-header {
     // Tabs should have "ears" (trailing bottom line past tab boundary).
     padding: 0 4px;
 
-    border-bottom: 1px solid $primary-low;
+    border-bottom: 1px solid dark-light-choose($primary-low, $secondary-medium);
 
     li {
       &.glyphs a {
@@ -20,7 +20,7 @@ div.menu-links-header {
       }
 
       .active {
-        border: 1px solid $primary-low;
+        border: 1px solid dark-light-choose($primary-low, $secondary-medium);
         border-bottom: 0;
         position: relative;
 
