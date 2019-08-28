@@ -70,3 +70,21 @@ div.menu-links-header {
     }
   }
 }
+
+.user-menu {
+  .notifications {
+    li {
+      a {
+        & > div {
+          // Truncate items with more than 2 lines. Despite not being
+          // standardized yet, this seems to work across all major browsers.
+          // https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp#Browser_compatibility
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}
