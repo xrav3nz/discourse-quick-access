@@ -6,8 +6,8 @@ createWidgetFrom(QuickAccessPanel, "quick-access-profile", {
   buildKey: () => "quick-access-profile",
 
   hasMore() {
-    // Always show the button to the full profile page.
-    return true;
+    // Never show the button to the full profile page.
+    return false;
   },
 
   showAll() {
