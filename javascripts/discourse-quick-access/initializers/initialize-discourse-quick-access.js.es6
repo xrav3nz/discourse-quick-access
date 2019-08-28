@@ -81,6 +81,15 @@ const UserMenuLinks = {
           style: "display: none;"
         }
       });
+    } else if (
+      definition.className === "enable-anonymous" ||
+      definition.className === "disable-anonymous"
+    ) {
+      return Object.assign({}, definition, {
+        attributes: {
+          style: "display: none;"
+        }
+      });
     }
     return definition;
   }
