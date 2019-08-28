@@ -1,5 +1,8 @@
 div.menu-links-header {
   .menu-links-row {
+    // Tabs should have "ears" (trailing bottom line past tab boundary).
+    padding: 0 4px;
+
     border-bottom: 1px solid $primary-low;
 
     li {
