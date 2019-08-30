@@ -84,7 +84,6 @@ createWidgetFrom(QuickAccessPanel, "quick-access-profile", {
     return {
       icon: "sign-out-alt",
       action: "logout",
-      href: this.attrs.path,
       content: I18n.t("user.log_out")
     };
   },
