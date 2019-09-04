@@ -9,14 +9,28 @@ import { emojiUnescape } from "discourse/lib/text";
 import { iconNode } from "discourse-common/lib/icon-library";
 import { postUrl } from "discourse/lib/utilities";
 
+const ICON = "bookmark";
+
 createWidget("quick-access-item", {
   tagName: "li.read",
+
+  buildClasses(attrs) {
+    const result = [];
+    if (attrs.className) {
+      result.push(attrs.className);
+    }
+    return result;
+  },
+
+  usernameHtml() {
+    return this.attrs.username ? `<span>${this.attrs.username}</span> ` : "";
+  },
 
   html({ icon, href, content }) {
     return h("a", { attributes: { href } }, [
       iconNode(icon),
       new RawHtml({
-        html: `<div>${emojiUnescape(
+        html: `<div>${this.usernameHtml()}${emojiUnescape(
           Handlebars.Utils.escapeExpression(content)
         )}</div>`
       })
@@ -72,13 +86,11 @@ createWidgetFrom(QuickAccessPanel, "quick-access-bookmarks", {
   },
 
   itemHtml(bookmark) {
-    const icon = "bookmark";
-    const href = postUrl(
-      bookmark.slug,
-      bookmark.topic_id,
-      bookmark.post_number
-    );
-    const content = bookmark.title;
-    return this.attach("quick-access-item", { icon, href, content });
+    return this.attach("quick-access-item", {
+      icon: ICON,
+      href: postUrl(bookmark.slug, bookmark.topic_id, bookmark.post_number),
+      content: bookmark.title,
+      username: bookmark.username
+    });
   }
 });
