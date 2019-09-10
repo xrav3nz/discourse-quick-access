@@ -1,10 +1,12 @@
 {
   "name": "discourse-quick-access",
   "component": true,
-  "about_url": null,
+  "about_url": "https://github.com/xrav3nz/discourse-quick-access",
   "license_url": null,
   "assets": {
   },
   "color_schemes": {
-  }
+  },
+  "minimum_discourse_version": "2.4.0.beta2",
+  "maximum_discourse_version": "2.4.0.beta3"
 }
